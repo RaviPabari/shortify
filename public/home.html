@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>URL Shortener</title>
+      <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+      <link href="style.css" rel="stylesheet" type="text/css">
+   </head>
+   <body>
+      <div class="container">
+        <h2>Url Shortener Microservice</h2>
+        <pre>
+         ███████╗██╗  ██╗ ██████╗ ██████╗ ████████╗██╗███████╗██╗   ██╗
+         ██╔════╝██║  ██║██╔═══██╗██╔══██╗╚══██╔══╝██║██╔════╝╚██╗ ██╔╝
+         ███████╗███████║██║   ██║██████╔╝   ██║   ██║█████╗   ╚████╔╝ 
+         ╚════██║██╔══██║██║   ██║██╔══██╗   ██║   ██║██╔══╝    ╚██╔╝  
+         ███████║██║  ██║╚██████╔╝██║  ██║   ██║   ██║██║        ██║   
+         ╚══════╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝        ╚═╝   </pre> 
+         <form id="form" method="POST">
+          <label for="url_input">URL to be shortened</label>
+          <input id="url_input" type="text" name="url">
+          <input type="submit" value="POST URL" >
+        </form>
+        <div id="para">
+        </div>
+      </div>
+   </body>
+   <script>
+      const input = document.getElementById('form')
+      form.addEventListener('submit',(e)=>{
+         e.preventDefault()
+         var inputUrl = document.getElementById('url_input').value
+         fetch("http://localhost:3000/api/url/shorten",{
+         method: "POST", 
+         body: JSON.stringify({
+            longUrl: inputUrl
+            }),
+         headers: {
+         'Content-type': 'application/json; charset=UTF-8',
+         }, 
+      }).then((res)=>{
+         return res.json()
+      }).then((data)=>{
+         console.log(data)
+         var para = document.getElementById('para')
+         para.innerHTML = `<h1> Short url generated => <code>${data.shortUrl}</code> </h1>`
+      })
+   })
+   </script>
+</html>
